@@ -19,8 +19,55 @@ app.get('/', (req, res) => {
   res.status(200).send('Welcome to <a href="https://github.com/tobimori/streamdeck-shields">StreamDeck Shields.io Custom Endpoint</a> by tobimori 👋') 
 });
 
+app.get('/plain/downloads/:id', (req, res) => {
+  console.log(`[${new Date()}] Received GET /plain/downloads/${req.params.id}`);
+  api({ 'url': 'https://appstore.elgato.com/streamDeckPlugin/catalog.json', method: 'get' })
+    .then(async (response) => {
+      let downloads;
+      for (let e of response.data.plugins) {
+        if (e.identifier === req.params.id) {
+          downloads = `${e.downloads}`;
+          break;
+        }
+      };
+      downloads ? res.status(200).send(downloads) : res.status(404).send('identifier not found');
+    })
+    .catch(function (error) {
+      res.status(500).send(error);
+      console.log(`[${new Date()}] 500 Internal Server Error`, error);
+    })
+}); 
+
+
+app.get('/json/downloads/:id', (req, res) => {
+  console.log(`[${new Date()}] Received GET /json/downloads/${req.params.id}`);
+  api({ 'url': 'https://appstore.elgato.com/streamDeckPlugin/catalog.json', method: 'get' })
+    .then(async (response) => {
+      let downloads;
+      for (let e of response.data.plugins) {
+        if (e.identifier === req.params.id) {
+          downloads = `${e.downloads}`;
+          break;
+        }
+      };
+      downloads ? res.status(200).send({
+        "identifier": req.params.id,
+        "downloads": downloads,
+      }) : res.status(404).send({
+        "error": "identifier not found",
+      }) 
+
+    })
+    .catch(function (error) {
+      res.status(500).send({
+        "error": error
+      })
+      console.log(`[${new Date()}] 500 Internal Server Error`, error);
+    })
+}); 
+
 app.get('/shields/downloads/:id', (req, res) => {
-  console.log(`[${new Date()}] Received /shields/downloads request for ${req.params.id}`);
+  console.log(`[${new Date()}] Received GET /shields/downloads/${req.params.id}`);
   api({'url': 'https://appstore.elgato.com/streamDeckPlugin/catalog.json', method: 'get'})
     .then(async (response) => {
       let downloads = "error whilst retrieving data";
@@ -43,7 +90,7 @@ app.get('/shields/downloads/:id', (req, res) => {
       res.status(500).send({
         "error": error
       })
-      console.log(error);
+      console.log(`[${new Date()}] 500 Internal Server Error`, error);
     })
 }); 
 
