@@ -18,10 +18,6 @@ GET https://streamdeck.api.moeritz.io/plain/downloads/{pluginId}/
 14144
 ```
 
-```
-GET https://streamdeck.api.moeritz.io/json/downloads/{pluginId}/
-```
-
 #### Example
 ```
 GET https://streamdeck.api.moeritz.io/json/downloads/{pluginId}/
