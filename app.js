@@ -25,7 +25,10 @@ app.get('/shields/downloads/:id', (req, res) => {
     .then(async (response) => {
       let downloads = "error whilst retrieving data";
       for (let e of response.data.plugins) {
-        if (e.identifier === req.params.id) downloads = `${e.downloads}`
+        if (e.identifier === req.params.id) {
+          downloads = `${e.downloads}`;
+          break;
+        }
       };
       res.status(200).send({
         "schemaVersion": 1,
