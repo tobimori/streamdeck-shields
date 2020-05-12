@@ -16,8 +16,9 @@ const api = axios.create({
 })
 
 app.get('/', (req, res) => {
-  res.status(200).send("Welcome to StreamDeck Shields.io Custom Endpoint by tobimori 👋") 
+  res.status(200).send('Welcome to <a href="https://github.com/tobimori/streamdeck-shields">StreamDeck Shields.io Custom Endpoint</a> by tobimori 👋') 
 });
+
 app.get('/shields/downloads/:id', (req, res) => {
   console.log(`[${new Date()}] Received /shields/downloads request for ${req.params.id}`);
   api({'url': 'https://appstore.elgato.com/streamDeckPlugin/catalog.json', method: 'get'})
