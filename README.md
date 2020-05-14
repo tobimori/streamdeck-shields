@@ -1,3 +1,5 @@
+## Moved to [tobimori/streamdeck-api](https://github.com/tobimori/streamdeck-api)
+
 All API access is over HTTPS, and accessed from https://streamdeck.api.moeritz.io.
 
 
